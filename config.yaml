@@ -1,0 +1,78 @@
+# MRP系统配置文件
+# 车规功率芯片动态安全库存与月度下单配置
+
+# 数据源配置
+data:
+  input_file: "data/rawdata.xlsx"
+  sheet_name: null # None表示使用第一个sheet
+  header: null # None表示无表头
+
+# 输出配置
+output:
+  directory: "outputs"
+  formats: ["csv", "excel"] # 支持的输出格式
+  files:
+    quality_report: "quality_report.csv"
+    error_metrics: "error_metrics.csv"
+    leadtime_params: "leadtime_params.csv"
+    earr_detail: "earr_detail.csv"
+    orders: "orders.csv"
+    main_table: "main_table.csv"
+    summary_report: "summary_report.xlsx"
+
+# 计算参数
+parameters:
+  # 服务水平参数 (99.5%对应Z=1.65)
+  service_level_z: 1.65
+
+  # 滚动窗口大小（月数）
+  rolling_window: 12
+
+  # 库存平衡校验容忍度（相对误差）
+  balance_tolerance: 0.03
+
+  # 交期参数约束
+  leadtime_constraints:
+    min_p1: 0.0
+    min_p2: 0.0
+    max_sum: 1.0 # p1 + p2 <= 1
+
+  # 最小样本数要求
+  min_sample_size: 6
+
+# 产品范围
+products:
+  - company: "LD公司"
+    product: "50KA"
+  - company: "B公司"
+    product: "10LL"
+
+# 指标映射
+indicators:
+  forecast: "F" # 预测
+  actual_demand: "S" # 实际销售
+  other_sales: "S_other" # 其他销售
+  other_out: "OUT_other" # 其他出库
+  inventory_start: "I_start" # 期初库存
+  inventory_end: "I_end" # 期末库存
+  receipts: "R" # 到货量
+  orders: "O" # 订单
+
+# 质量检查配置
+quality:
+  enable_balance_check: true
+  enable_anomaly_detection: true
+  anomaly_threshold: 3.0 # 异常检测阈值（标准差倍数）
+
+# 可视化配置
+visualization:
+  enable: true
+  chart_types: ["trend", "error_analysis", "inventory"]
+  figure_size: [12, 8]
+  dpi: 300
+
+# 日志配置
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file: "outputs/mrp.log"
