@@ -1,0 +1,29 @@
+# Python相关文件夹 - 第一阶段使用Excel实现，暂时过滤Python相关内容
+python_mode_bak/
+
+# 其他可能需要忽略的文件
+*.pyc
+__pycache__/
+*.pyo
+*.pyd
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# 临时文件
+*.tmp
+*.temp
+~$*
